@@ -57,19 +57,26 @@ on c.category_id = p.category_id group by (p.category_id, c.category_id) order b
 --Pregunta 15, ¿Como podemos hacer el reporte de reorder?
 select product_id, product_name, units_in_stock from products p where units_in_stock < reorder_level 
 order by product_name, units_in_stock;
---Numero de productos a reordenar
-select count(*) from products p where units_in_stock < reorder_level;
 
 --Pregunta 16, ¿A donde va nuestro envío más voluminoso?
+select max(od.quantity), o.ship_country from order_details od join orders o 
+on od.order_id=o.order_id group by o.ship_country order by max(od.quantity) desc limit 1;
 
 --Pregunta 17, ¿Cómo creamos una columna en customers que nos diga si un cliente es bueno, regular, o malo?
 
 --Pregunta 18, ¿Qué colaboradores chambearon durante las fiestas de navidad?
+select distinct o.employee_id, e.first_name, e.last_name from orders o join employees e on o.employee_id = e.employee_id 
+where (date_part('month', o.shipped_date) = 12 and date_part('day',o.shipped_date)= 25);
 
 --Pregunta 19, ¿Qué productos mandamos en navidad?
-
+select od.product_id, p.product_name from orders o join order_details od on o.order_id = od.order_id
+join products p on p.product_id  = od.product_id where (date_part('month', o.shipped_date) = 12
+and date_part('day',o.shipped_date)= 25);
 
 --Pregunta 20, ¿Qué país recibe el mayor volumen de producto?
+select ship_country, max(freight) as mayor_volumen from orders o group by ship_country, freight
+order by freight desc limit 1;
+
 
 
 
