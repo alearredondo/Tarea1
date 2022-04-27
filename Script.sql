@@ -30,7 +30,7 @@ and ship_country!='Brazil'and ship_country!='Venezuela'
 order by ship_country; 
 
 --Pregunta 8, Necesitamos los nombres completos de los empleados, nombres y apellidos unidos en un mismo registro
-select concat (first_name,' ', last_name) as  from employees e;
+select concat (first_name,' ', last_name) as nombre from employees e;
 
 --Pregunta 9, ¿Cuánta lana tenemos en inventario?
 select sum(units_in_stock*unit_price) as "Lana en inventario" from products p;
@@ -41,10 +41,10 @@ select country, count(*) from customers c group by country order by 2 desc;
 --Continuación tarea 1
 --Pregunta 11, Obtener un reporte de edades de los empleados para checar su elegibilidad para 
 --seguro de gastos médicos menores.
-select first_name, last_name, age(now(), birth_date) as "edad" from employees e order by birth_date;
+select first_name, last_name, age(now(), birth_date) as edad from employees e order by birth_date;
 
 --Pregunta 12, ¿Cuál es la orden más reciente por cliente?
-select customer_id, order_id, max(order_date) as "MAS RECIENTE" from orders 
+select customer_id, order_id, max(order_date) as mas_reciente from orders 
 group by (customer_id, order_id) order by 2 desc;
 
 --Pregunta 13, ¿De nuestros clientes, qué función desempeñan y cuántos son?
